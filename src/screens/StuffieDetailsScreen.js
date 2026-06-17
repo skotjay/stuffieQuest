@@ -30,6 +30,10 @@ export default function StuffieDetailsScreen({ route, navigation }) {
     );
   }
 
+  function handleFavoriteToggle() {
+    toggleFavorite(stuffie.id);
+  }
+
   function handleDelete() {
     deleteStuffie(stuffie.id);
 
@@ -39,12 +43,7 @@ export default function StuffieDetailsScreen({ route, navigation }) {
   return (
     <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
       {stuffie.imageUri ? (
-        <Image
-          source={{
-            uri: stuffie.imageUri,
-          }}
-          style={styles.image}
-        />
+        <Image source={{ uri: stuffie.imageUri }} style={styles.image} />
       ) : (
         <View style={styles.placeholder}>
           <Text style={styles.placeholderText}>No portrait available</Text>
@@ -61,9 +60,18 @@ export default function StuffieDetailsScreen({ route, navigation }) {
             <IconButton
               icon={stuffie.favorite ? "heart" : "heart-outline"}
               iconColor={theme.custom.colors.accent}
-              onPress={() => toggleFavorite(stuffie.id)}
+              onPress={handleFavoriteToggle}
             />
           </View>
+
+          <Button
+            mode={stuffie.favorite ? "contained" : "outlined"}
+            icon={stuffie.favorite ? "heart" : "heart-outline"}
+            onPress={handleFavoriteToggle}
+            style={styles.favoriteButton}
+          >
+            {stuffie.favorite ? "Remove from Favorites" : "Add to Favorites"}
+          </Button>
 
           <Text style={styles.subtitle}>{stuffie.beingType}</Text>
 
@@ -124,7 +132,9 @@ export default function StuffieDetailsScreen({ route, navigation }) {
         <Button
           mode="contained"
           onPress={() =>
-            navigation.navigate("EditStuffie", { stuffieId: stuffie.id })
+            navigation.navigate("EditStuffie", {
+              stuffieId: stuffie.id,
+            })
           }
           style={styles.button}
         >
@@ -134,7 +144,9 @@ export default function StuffieDetailsScreen({ route, navigation }) {
         <Button
           mode="contained-tonal"
           onPress={() =>
-            navigation.navigate("QuestLog", { stuffieId: stuffie.id })
+            navigation.navigate("QuestLog", {
+              stuffieId: stuffie.id,
+            })
           }
           style={styles.button}
         >
@@ -157,51 +169,36 @@ export default function StuffieDetailsScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-
     backgroundColor: theme.custom.colors.background,
   },
 
   content: {
     padding: theme.custom.spacing.lg,
-
     paddingBottom: 120,
   },
 
   centered: {
     flex: 1,
-
     alignItems: "center",
-
     justifyContent: "center",
-
     padding: theme.custom.spacing.lg,
-
     backgroundColor: theme.custom.colors.background,
   },
 
   image: {
     width: "100%",
-
     height: 300,
-
     borderRadius: theme.custom.radius.lg,
-
     marginBottom: theme.custom.spacing.lg,
   },
 
   placeholder: {
     width: "100%",
-
     height: 300,
-
     borderRadius: theme.custom.radius.lg,
-
     marginBottom: theme.custom.spacing.lg,
-
     alignItems: "center",
-
     justifyContent: "center",
-
     backgroundColor: theme.custom.colors.border,
   },
 
@@ -211,63 +208,54 @@ const styles = StyleSheet.create({
 
   card: {
     borderRadius: theme.custom.radius.lg,
-
     backgroundColor: theme.custom.colors.surface,
   },
 
   header: {
     flexDirection: "row",
-
     justifyContent: "space-between",
-
     alignItems: "center",
   },
 
   name: {
     flex: 1,
-
     color: theme.custom.colors.primary,
-
     fontWeight: "800",
+  },
+
+  favoriteButton: {
+    marginTop: theme.custom.spacing.sm,
+    marginBottom: theme.custom.spacing.md,
+    borderRadius: theme.custom.radius.md,
   },
 
   subtitle: {
     color: theme.custom.colors.textSecondary,
-
     marginBottom: theme.custom.spacing.md,
-
     fontSize: 16,
   },
 
   badges: {
     flexDirection: "row",
-
     flexWrap: "wrap",
-
     marginBottom: theme.custom.spacing.md,
   },
 
   sectionTitle: {
     marginTop: theme.custom.spacing.md,
-
     marginBottom: theme.custom.spacing.xs,
-
     color: theme.custom.colors.text,
-
     fontWeight: "700",
-
     fontSize: 16,
   },
 
   bodyText: {
     color: theme.custom.colors.textSecondary,
-
     lineHeight: 22,
   },
 
   buttonGroup: {
     marginTop: theme.custom.spacing.lg,
-
     gap: theme.custom.spacing.md,
   },
 
