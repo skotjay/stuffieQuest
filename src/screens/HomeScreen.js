@@ -88,6 +88,14 @@ export default function HomeScreen({ navigation }) {
         >
           View Favorites
         </Button>
+
+        <Button
+          mode="outlined"
+          style={styles.button}
+          onPress={() => navigation.navigate("Settings")}
+        >
+          Settings
+        </Button>
       </View>
 
       <Card style={styles.infoCard}>
